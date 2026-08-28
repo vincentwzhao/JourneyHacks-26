@@ -1,0 +1,682 @@
+<title>CMPT Vision Board</title>
+<style>
+  :root {
+    --bg: #EEF0E8;
+    --surface: #FBFBF7;
+    --surface-2: #F2F3EC;
+    --ink: #1E2620;
+    --ink-soft: #445048;
+    --muted: #6B7568;
+    --border: rgba(30,38,32,0.14);
+    --border-strong: rgba(30,38,32,0.28);
+    --gold: #A9762E;
+    --gold-soft: #E8D6B0;
+    --teal: #2E625D;
+    --teal-soft: #CFE3DF;
+    --plum: #7A4468;
+    --plum-soft: #E9D6E2;
+    --good: #3C7A4E;
+    --shadow: 0 1px 2px rgba(20,26,18,0.06), 0 8px 24px -12px rgba(20,26,18,0.22);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #12160F;
+      --surface: #1B2018;
+      --surface-2: #202619;
+      --ink: #ECEFE6;
+      --ink-soft: #B7C0B2;
+      --muted: #8B9587;
+      --border: rgba(236,239,230,0.14);
+      --border-strong: rgba(236,239,230,0.30);
+      --gold: #D8A552;
+      --gold-soft: rgba(216,165,82,0.20);
+      --teal: #6BB0A6;
+      --teal-soft: rgba(107,176,166,0.18);
+      --plum: #C084AF;
+      --plum-soft: rgba(192,132,175,0.18);
+      --good: #74C489;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 28px -14px rgba(0,0,0,0.6);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #12160F;
+    --surface: #1B2018;
+    --surface-2: #202619;
+    --ink: #ECEFE6;
+    --ink-soft: #B7C0B2;
+    --muted: #8B9587;
+    --border: rgba(236,239,230,0.14);
+    --border-strong: rgba(236,239,230,0.30);
+    --gold: #D8A552;
+    --gold-soft: rgba(216,165,82,0.20);
+    --teal: #6BB0A6;
+    --teal-soft: rgba(107,176,166,0.18);
+    --plum: #C084AF;
+    --plum-soft: rgba(192,132,175,0.18);
+    --good: #74C489;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 28px -14px rgba(0,0,0,0.6);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Public Sans", -apple-system, "Segoe UI", sans-serif;
+    padding: 0 0 5rem;
+  }
+  h1, h2, h3 { font-family: "Fraunces", Georgia, "Times New Roman", serif; text-wrap: balance; margin: 0; }
+  .mono { font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace; font-variant-numeric: tabular-nums; }
+
+  a { color: inherit; }
+  button { font: inherit; cursor: pointer; }
+  input, select { font: inherit; color: inherit; }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    background:
+      radial-gradient(circle at 1px 1px, var(--border-strong) 1px, transparent 0) 0 0/22px 22px,
+      linear-gradient(180deg, var(--surface-2), var(--bg));
+    border-bottom: 1px solid var(--border);
+    padding: 3rem 1.5rem 2.25rem;
+  }
+  .hero-inner {
+    max-width: 68rem;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .eyebrow {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin: 0 0 0.6rem;
+  }
+  .hero h1 { font-size: clamp(1.9rem, 4vw, 2.6rem); font-weight: 600; }
+  .hero-sub {
+    margin-top: 0.6rem;
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+  .hero-sub input {
+    background: transparent;
+    border: none;
+    border-bottom: 1px dashed var(--border-strong);
+    color: var(--ink-soft);
+    padding: 0.1rem 0.15rem;
+    min-width: 9rem;
+  }
+  .hero-sub input:focus { outline: none; border-bottom-color: var(--teal); }
+
+  .gpa-card {
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1rem 1.3rem;
+    box-shadow: var(--shadow);
+  }
+  .gpa-ring { flex-shrink: 0; }
+  .gpa-figures .big {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 1.9rem;
+    font-weight: 600;
+    line-height: 1;
+  }
+  .gpa-figures .label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-top: 0.3rem; }
+  .target-row { margin-top: 0.5rem; font-size: 0.85rem; color: var(--muted); display: flex; align-items: center; gap: 0.35rem; }
+  .target-row input {
+    width: 3.4rem;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.15rem 0.4rem;
+    font-family: "IBM Plex Mono", monospace;
+    color: var(--ink);
+  }
+  .target-row input:focus { outline: none; border-color: var(--gold); }
+
+  /* ---------- Boards ---------- */
+  main { max-width: 68rem; margin: 0 auto; padding: 0 1.5rem; display: flex; flex-direction: column; gap: 2.6rem; }
+  .board {
+    position: relative;
+    margin-top: 1.6rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    padding: 2rem 1.6rem 1.6rem;
+  }
+  .ticket {
+    position: absolute;
+    top: -1.05rem;
+    left: 1.4rem;
+    background: var(--ink);
+    color: var(--bg);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.4rem 0.85rem;
+    border-radius: 999px;
+    box-shadow: var(--shadow);
+  }
+  .board-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 1rem; margin-bottom: 1.1rem; flex-wrap: wrap; }
+  .board-head h2 { font-size: 1.35rem; font-weight: 600; }
+  .board-head p { margin: 0.3rem 0 0; color: var(--muted); font-size: 0.88rem; max-width: 34rem; }
+
+  /* Course table */
+  .course-table { width: 100%; border-collapse: collapse; }
+  .course-table th {
+    text-align: left;
+    font-size: 0.7rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 600;
+    padding: 0 0.6rem 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .course-table td {
+    padding: 0.55rem 0.6rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+  }
+  .course-table tr:last-child td { border-bottom: none; }
+  .course-table input[type="text"] {
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    padding: 0.3rem 0.4rem;
+    width: 100%;
+  }
+  .course-table input[type="text"]:hover { border-color: var(--border); }
+  .course-table input[type="text"]:focus { outline: none; border-color: var(--teal); background: var(--surface-2); }
+  .course-table input.code { font-family: "IBM Plex Mono", monospace; font-weight: 600; width: 6.5rem; }
+  .course-table input.credits { width: 3.2rem; font-family: "IBM Plex Mono", monospace; text-align: center; }
+  .course-table select {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.3rem 0.45rem;
+    font-family: "IBM Plex Mono", monospace;
+    font-weight: 600;
+  }
+  .points { color: var(--muted); font-family: "IBM Plex Mono", monospace; }
+  .row-remove {
+    background: none; border: none; color: var(--muted);
+    width: 1.6rem; height: 1.6rem; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 1rem; line-height: 1;
+  }
+  .row-remove:hover { background: var(--plum-soft); color: var(--plum); }
+
+  .add-row {
+    margin-top: 0.9rem;
+    width: 100%;
+    padding: 0.6rem;
+    border: 1px dashed var(--border-strong);
+    border-radius: 10px;
+    background: transparent;
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+  .add-row:hover { border-color: var(--teal); color: var(--teal); }
+
+  .credit-total { margin-top: 0.7rem; font-size: 0.8rem; color: var(--muted); }
+
+  /* Pipeline */
+  .pipeline { display: grid; grid-template-columns: repeat(4, minmax(15rem, 1fr)); gap: 1rem; overflow-x: auto; padding-bottom: 0.2rem; }
+  .lane { background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; padding: 0.85rem; display: flex; flex-direction: column; gap: 0.6rem; min-width: 15rem; }
+  .lane-head { display: flex; justify-content: space-between; align-items: center; }
+  .lane-head h3 { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.07em; font-family: "IBM Plex Mono", monospace; color: var(--ink-soft); }
+  .lane-count { font-family: "IBM Plex Mono", monospace; font-size: 0.72rem; color: var(--muted); background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 0.05rem 0.5rem; }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.65rem 0.7rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    box-shadow: var(--shadow);
+  }
+  .card input[type="text"] { background: transparent; border: none; padding: 0.1rem 0; width: 100%; }
+  .card input[type="text"]:focus { outline: none; }
+  .card .role { font-weight: 600; }
+  .card .company { color: var(--teal); font-size: 0.85rem; }
+  .card .note { color: var(--muted); font-size: 0.78rem; }
+  .card-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 0.2rem; }
+  .advance {
+    background: var(--gold-soft); color: var(--gold);
+    border: none; border-radius: 7px; padding: 0.25rem 0.55rem;
+    font-size: 0.72rem; font-weight: 600; letter-spacing: 0.02em;
+  }
+  .advance:disabled { opacity: 0.4; cursor: default; }
+  .advance:not(:disabled):hover { filter: brightness(1.08); }
+  .offer-badge {
+    background: var(--gold-soft); color: var(--gold); font-family: "IBM Plex Mono", monospace;
+    font-size: 0.68rem; letter-spacing: 0.08em; padding: 0.2rem 0.5rem; border-radius: 999px;
+  }
+  .card-remove { background: none; border: none; color: var(--muted); font-size: 0.95rem; padding: 0.1rem 0.3rem; border-radius: 6px; }
+  .card-remove:hover { color: var(--plum); background: var(--plum-soft); }
+
+  .add-card { display: flex; flex-direction: column; gap: 0.35rem; border: 1px dashed var(--border-strong); border-radius: 10px; padding: 0.55rem; }
+  .add-card input { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 0.35rem 0.5rem; font-size: 0.82rem; }
+  .add-card input:focus { outline: none; border-color: var(--teal); }
+  .add-card button { align-self: flex-end; background: var(--teal-soft); color: var(--teal); border: none; border-radius: 7px; padding: 0.3rem 0.65rem; font-size: 0.76rem; font-weight: 600; }
+  .add-card button:hover { filter: brightness(1.05); }
+
+  /* Roles */
+  .role-cluster { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+  .chip {
+    display: flex; align-items: center; gap: 0.4rem;
+    background: var(--plum-soft); color: var(--plum);
+    border-radius: 999px; padding: 0.4rem 0.5rem 0.4rem 0.9rem;
+    font-size: 0.88rem; font-weight: 500;
+    box-shadow: var(--shadow);
+  }
+  .chip input {
+    background: transparent; border: none; color: var(--plum);
+    font: inherit; font-weight: 500; width: auto;
+    min-width: 3ch;
+  }
+  .chip input:focus { outline: none; }
+  .chip button { background: none; border: none; color: var(--plum); opacity: 0.65; width: 1.4rem; height: 1.4rem; border-radius: 50%; }
+  .chip button:hover { opacity: 1; background: rgba(0,0,0,0.06); }
+  .add-chip { display: flex; gap: 0.5rem; align-items: center; margin-top: 1rem; }
+  .add-chip input {
+    background: var(--surface-2); border: 1px solid var(--border); border-radius: 999px;
+    padding: 0.45rem 0.9rem; font-size: 0.88rem; min-width: 14rem;
+  }
+  .add-chip input:focus { outline: none; border-color: var(--plum); }
+  .add-chip button {
+    background: var(--plum); color: var(--surface); border: none; border-radius: 999px;
+    padding: 0.5rem 1rem; font-size: 0.85rem; font-weight: 600;
+  }
+  .add-chip button:hover { filter: brightness(1.08); }
+
+  footer {
+    max-width: 68rem; margin: 2.5rem auto 0; padding: 0 1.5rem;
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.6rem;
+  }
+  footer p { color: var(--muted); font-size: 0.8rem; margin: 0; }
+  .reset-btn { background: none; border: 1px solid var(--border-strong); color: var(--muted); border-radius: 999px; padding: 0.35rem 0.9rem; font-size: 0.78rem; }
+  .reset-btn:hover { color: var(--plum); border-color: var(--plum); }
+
+  :focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+  @media (max-width: 640px) {
+    .pipeline { grid-template-columns: minmax(15rem, 1fr); }
+  }
+</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<header class="hero">
+  <div class="hero-inner">
+    <div>
+      <p class="eyebrow">SFU · Computing Science</p>
+      <h1>CMPT Vision Board</h1>
+      <div class="hero-sub">
+        Tracking <input type="text" id="termInput" value="Fall 2026 – Spring 2028" aria-label="Term range" /> toward the degree, and the internships lined up alongside it.
+      </div>
+    </div>
+    <div class="gpa-card">
+      <svg class="gpa-ring" id="gpaRing" width="86" height="86" viewBox="0 0 86 86">
+        <circle cx="43" cy="43" r="36" fill="none" stroke="var(--border)" stroke-width="8"></circle>
+        <circle id="gpaArc" cx="43" cy="43" r="36" fill="none" stroke="var(--teal)" stroke-width="8" stroke-linecap="round" transform="rotate(-90 43 43)"></circle>
+        <text id="gpaText" x="43" y="48" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="17" font-weight="600" fill="var(--ink)">0.00</text>
+      </svg>
+      <div class="gpa-figures">
+        <div class="label">Current target average</div>
+        <div class="target-row">
+          Goal GPA
+          <input type="number" id="targetGpaInput" min="0" max="4.33" step="0.01" value="3.67" aria-label="Target GPA" />
+          <span class="mono">/ 4.33</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="board" id="coursesBoard">
+    <span class="ticket">Course Log</span>
+    <div class="board-head">
+      <div>
+        <h2>CMPT courses &amp; target grades</h2>
+        <p>Set the grade you're aiming for in each course — the ring above updates as a credit-weighted average.</p>
+      </div>
+      <div class="credit-total mono" id="creditTotal"></div>
+    </div>
+    <table class="course-table">
+      <thead>
+        <tr>
+          <th style="width:7rem">Course</th>
+          <th>Title</th>
+          <th style="width:8rem">Term</th>
+          <th style="width:4.5rem">Credits</th>
+          <th style="width:5.5rem">Target</th>
+          <th style="width:4rem">Points</th>
+          <th style="width:2rem"></th>
+        </tr>
+      </thead>
+      <tbody id="courseRows"></tbody>
+    </table>
+    <button class="add-row" id="addCourse">+ Add course</button>
+  </section>
+
+  <section class="board" id="pipelineBoard">
+    <span class="ticket">Internship Pipeline</span>
+    <div class="board-head">
+      <div>
+        <h2>Applications in motion</h2>
+        <p>Every application starts on the wishlist and moves right as it progresses. Nothing here syncs anywhere — it's yours.</p>
+      </div>
+    </div>
+    <div class="pipeline" id="pipeline"></div>
+  </section>
+
+  <section class="board" id="rolesBoard">
+    <span class="ticket">Target Roles</span>
+    <div class="board-head">
+      <div>
+        <h2>Roles worth aiming for</h2>
+        <p>The positions you'd say yes to immediately — keep this list honest and short.</p>
+      </div>
+    </div>
+    <div class="role-cluster" id="roleCluster"></div>
+    <div class="add-chip">
+      <input type="text" id="newRoleInput" placeholder="e.g. Machine Learning Intern" aria-label="New target role" />
+      <button id="addRole">+ Add role</button>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p>Saved locally in your browser — nothing leaves this page.</p>
+  <button class="reset-btn" id="resetBoard">Reset to defaults</button>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  var STORAGE_KEY = "cmpt-vision-board-v1";
+  var GRADES = ["A+","A","A-","B+","B","B-","C+","C","C-","D","F"];
+  var GRADE_POINTS = { "A+":4.33, "A":4.00, "A-":3.67, "B+":3.33, "B":3.00, "B-":2.67, "C+":2.33, "C":2.00, "C-":1.67, "D":1.00, "F":0.00 };
+  var LANES = [
+    { key: "wishlist", label: "Wishlist" },
+    { key: "applied", label: "Applied" },
+    { key: "interviewing", label: "Interviewing" },
+    { key: "offer", label: "Offer" }
+  ];
+
+  function defaultState() {
+    return {
+      term: "Fall 2026 – Spring 2028",
+      targetGpa: 3.67,
+      courses: [
+        { code: "CMPT 225", name: "Data Structures & Programming", term: "Fall 2026", credits: 3, grade: "A-" },
+        { code: "CMPT 276", name: "Software Engineering", term: "Spring 2027", credits: 3, grade: "A" },
+        { code: "CMPT 295", name: "Intro to Computer Systems", term: "Spring 2027", credits: 3, grade: "B+" },
+        { code: "CMPT 307", name: "Data Structures & Algorithms", term: "Fall 2027", credits: 3, grade: "A-" },
+        { code: "CMPT 371", name: "Data Communications & Networking", term: "Fall 2027", credits: 3, grade: "A" }
+      ],
+      pipeline: {
+        wishlist: [
+          { role: "Software Engineer Intern", company: "Shopify", note: "Applications open Sept" }
+        ],
+        applied: [
+          { role: "Backend Developer Intern", company: "Local fintech startup", note: "Applied Aug 20" }
+        ],
+        interviewing: [],
+        offer: []
+      },
+      roles: ["Software Engineer Intern", "Backend Developer Intern", "Data / ML Intern"]
+    };
+  }
+
+  function loadState() {
+    try {
+      var raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) return JSON.parse(raw);
+    } catch (e) {}
+    return defaultState();
+  }
+
+  function saveState() {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {}
+  }
+
+  var state = loadState();
+
+  function el(tag, cls, html) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (html !== undefined) e.innerHTML = html;
+    return e;
+  }
+
+  function computeGpa() {
+    var totalCredits = 0, totalPoints = 0;
+    state.courses.forEach(function (c) {
+      var credits = Number(c.credits) || 0;
+      totalCredits += credits;
+      totalPoints += credits * (GRADE_POINTS[c.grade] || 0);
+    });
+    return { gpa: totalCredits ? totalPoints / totalCredits : 0, credits: totalCredits };
+  }
+
+  function renderGpa() {
+    var res = computeGpa();
+    var arc = document.getElementById("gpaArc");
+    var text = document.getElementById("gpaText");
+    var r = 36, circumference = 2 * Math.PI * r;
+    var fraction = Math.max(0, Math.min(1, res.gpa / 4.33));
+    arc.style.strokeDasharray = circumference.toFixed(2);
+    arc.style.strokeDashoffset = (circumference * (1 - fraction)).toFixed(2);
+    var target = Number(state.targetGpa) || 0;
+    arc.style.stroke = res.gpa >= target ? "var(--good)" : "var(--teal)";
+    text.textContent = res.gpa.toFixed(2);
+    document.getElementById("creditTotal").textContent = res.credits + " credits tracked";
+  }
+
+  function renderCourses() {
+    var tbody = document.getElementById("courseRows");
+    tbody.innerHTML = "";
+    state.courses.forEach(function (course, idx) {
+      var tr = el("tr");
+
+      var tdCode = el("td");
+      var codeInput = el("input"); codeInput.type = "text"; codeInput.className = "code";
+      codeInput.value = course.code; codeInput.setAttribute("aria-label", "Course code");
+      codeInput.addEventListener("input", function () { course.code = codeInput.value; saveState(); });
+      tdCode.appendChild(codeInput); tr.appendChild(tdCode);
+
+      var tdName = el("td");
+      var nameInput = el("input"); nameInput.type = "text";
+      nameInput.value = course.name; nameInput.setAttribute("aria-label", "Course title");
+      nameInput.addEventListener("input", function () { course.name = nameInput.value; saveState(); });
+      tdName.appendChild(nameInput); tr.appendChild(tdName);
+
+      var tdTerm = el("td");
+      var termInput = el("input"); termInput.type = "text";
+      termInput.value = course.term; termInput.setAttribute("aria-label", "Course term");
+      termInput.addEventListener("input", function () { course.term = termInput.value; saveState(); });
+      tdTerm.appendChild(termInput); tr.appendChild(tdTerm);
+
+      var tdCredits = el("td");
+      var creditsInput = el("input"); creditsInput.type = "text"; creditsInput.className = "credits";
+      creditsInput.value = course.credits; creditsInput.setAttribute("aria-label", "Credits");
+      creditsInput.addEventListener("input", function () {
+        course.credits = creditsInput.value.replace(/[^0-9.]/g, "");
+        saveState(); renderGpa();
+      });
+      tdCredits.appendChild(creditsInput); tr.appendChild(tdCredits);
+
+      var tdGrade = el("td");
+      var select = el("select"); select.setAttribute("aria-label", "Target grade");
+      GRADES.forEach(function (g) {
+        var opt = el("option", null, g); opt.value = g;
+        if (g === course.grade) opt.selected = true;
+        select.appendChild(opt);
+      });
+      select.addEventListener("change", function () { course.grade = select.value; saveState(); renderGpa(); renderCourses(); });
+      tdGrade.appendChild(select); tr.appendChild(tdGrade);
+
+      var tdPoints = el("td", "points", (GRADE_POINTS[course.grade] || 0).toFixed(2));
+      tr.appendChild(tdPoints);
+
+      var tdRemove = el("td");
+      var removeBtn = el("button", "row-remove", "&times;");
+      removeBtn.setAttribute("aria-label", "Remove course");
+      removeBtn.addEventListener("click", function () {
+        state.courses.splice(idx, 1); saveState(); renderCourses(); renderGpa();
+      });
+      tdRemove.appendChild(removeBtn); tr.appendChild(tdRemove);
+
+      tbody.appendChild(tr);
+    });
+  }
+
+  function renderPipeline() {
+    var wrap = document.getElementById("pipeline");
+    wrap.innerHTML = "";
+    LANES.forEach(function (lane, laneIdx) {
+      var items = state.pipeline[lane.key];
+      var laneEl = el("div", "lane");
+
+      var head = el("div", "lane-head");
+      head.appendChild(el("h3", null, lane.label));
+      head.appendChild(el("span", "lane-count mono", String(items.length)));
+      laneEl.appendChild(head);
+
+      items.forEach(function (item, itemIdx) {
+        var card = el("div", "card");
+
+        var roleInput = el("input"); roleInput.type = "text"; roleInput.className = "role";
+        roleInput.value = item.role; roleInput.setAttribute("aria-label", "Role");
+        roleInput.addEventListener("input", function () { item.role = roleInput.value; saveState(); });
+        card.appendChild(roleInput);
+
+        var companyInput = el("input"); companyInput.type = "text"; companyInput.className = "company";
+        companyInput.value = item.company; companyInput.setAttribute("aria-label", "Company");
+        companyInput.addEventListener("input", function () { item.company = companyInput.value; saveState(); });
+        card.appendChild(companyInput);
+
+        var noteInput = el("input"); noteInput.type = "text"; noteInput.className = "note";
+        noteInput.value = item.note || ""; noteInput.placeholder = "note or date";
+        noteInput.setAttribute("aria-label", "Note");
+        noteInput.addEventListener("input", function () { item.note = noteInput.value; saveState(); });
+        card.appendChild(noteInput);
+
+        var foot = el("div", "card-foot");
+        if (lane.key === "offer") {
+          foot.appendChild(el("span", "offer-badge", "OFFER"));
+        } else {
+          var advanceBtn = el("button", "advance", "Move to " + LANES[laneIdx + 1].label + " →");
+          advanceBtn.addEventListener("click", function () {
+            items.splice(itemIdx, 1);
+            state.pipeline[LANES[laneIdx + 1].key].push(item);
+            saveState(); renderPipeline();
+          });
+          foot.appendChild(advanceBtn);
+        }
+        var removeBtn = el("button", "card-remove", "&times;");
+        removeBtn.setAttribute("aria-label", "Remove application");
+        removeBtn.addEventListener("click", function () { items.splice(itemIdx, 1); saveState(); renderPipeline(); });
+        foot.appendChild(removeBtn);
+        card.appendChild(foot);
+
+        laneEl.appendChild(card);
+      });
+
+      var addCard = el("div", "add-card");
+      var roleField = el("input"); roleField.type = "text"; roleField.placeholder = "Role"; roleField.setAttribute("aria-label", "New role");
+      var companyField = el("input"); companyField.type = "text"; companyField.placeholder = "Company"; companyField.setAttribute("aria-label", "New company");
+      var addBtn = el("button", null, "+ Add");
+      addBtn.addEventListener("click", function () {
+        if (!roleField.value.trim() && !companyField.value.trim()) return;
+        items.push({ role: roleField.value.trim() || "Untitled role", company: companyField.value.trim(), note: "" });
+        saveState(); renderPipeline();
+      });
+      addCard.appendChild(roleField); addCard.appendChild(companyField); addCard.appendChild(addBtn);
+      laneEl.appendChild(addCard);
+
+      wrap.appendChild(laneEl);
+    });
+  }
+
+  function renderRoles() {
+    var wrap = document.getElementById("roleCluster");
+    wrap.innerHTML = "";
+    state.roles.forEach(function (role, idx) {
+      var chip = el("div", "chip");
+      var input = el("input"); input.type = "text"; input.value = role;
+      input.setAttribute("aria-label", "Target role");
+      input.style.width = Math.max(3, role.length) + "ch";
+      input.addEventListener("input", function () {
+        state.roles[idx] = input.value;
+        input.style.width = Math.max(3, input.value.length) + "ch";
+        saveState();
+      });
+      var removeBtn = el("button", null, "&times;");
+      removeBtn.setAttribute("aria-label", "Remove role");
+      removeBtn.addEventListener("click", function () { state.roles.splice(idx, 1); saveState(); renderRoles(); });
+      chip.appendChild(input); chip.appendChild(removeBtn);
+      wrap.appendChild(chip);
+    });
+  }
+
+  document.getElementById("addCourse").addEventListener("click", function () {
+    state.courses.push({ code: "CMPT ___", name: "New course", term: state.term.split("–")[0].trim(), credits: 3, grade: "A" });
+    saveState(); renderCourses(); renderGpa();
+  });
+
+  document.getElementById("addRole").addEventListener("click", function () {
+    var input = document.getElementById("newRoleInput");
+    var val = input.value.trim();
+    if (!val) return;
+    state.roles.push(val); input.value = "";
+    saveState(); renderRoles();
+  });
+  document.getElementById("newRoleInput").addEventListener("keydown", function (e) {
+    if (e.key === "Enter") document.getElementById("addRole").click();
+  });
+
+  document.getElementById("targetGpaInput").value = state.targetGpa;
+  document.getElementById("targetGpaInput").addEventListener("input", function (e) {
+    state.targetGpa = e.target.value; saveState(); renderGpa();
+  });
+
+  document.getElementById("termInput").value = state.term;
+  document.getElementById("termInput").addEventListener("input", function (e) {
+    state.term = e.target.value; saveState();
+  });
+
+  document.getElementById("resetBoard").addEventListener("click", function () {
+    if (!confirm("Reset the board back to its starting defaults? This clears everything you've entered.")) return;
+    state = defaultState();
+    saveState();
+    document.getElementById("termInput").value = state.term;
+    document.getElementById("targetGpaInput").value = state.targetGpa;
+    renderCourses(); renderPipeline(); renderRoles(); renderGpa();
+  });
+
+  renderCourses();
+  renderPipeline();
+  renderRoles();
+  renderGpa();
+})();
+</script>
