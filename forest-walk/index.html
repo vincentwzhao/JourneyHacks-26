@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Forest Walk — A Sensation Journey</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <canvas id="scene"></canvas>
+
+  <div id="vignette"></div>
+
+  <div id="hud">
+    <div id="stats">
+      <div class="stat"><span class="label">Distance</span><span id="statDistance">0 m</span></div>
+      <div class="stat"><span class="label">Phase</span><span id="statPhase">Dawn</span></div>
+      <div class="stat"><span class="label">Sky</span><span id="statWeather">Clear</span></div>
+      <div class="stat"><span class="label">Sensations</span><span id="statSensations">0</span></div>
+    </div>
+    <div id="controls">
+      <button id="btnPause" title="P">⏸ Pause</button>
+      <button id="btnJournal" title="J">📔 Journal</button>
+      <button id="btnMute" title="M">🔊 Sound</button>
+    </div>
+  </div>
+
+  <div id="sensationBox"></div>
+
+  <div id="journalPanel" class="hidden">
+    <div id="journalHeader">
+      <span>Your Journal</span>
+      <button id="btnCloseJournal">✕</button>
+    </div>
+    <div id="journalList"></div>
+  </div>
+
+  <div id="startScreen">
+    <div id="startCard">
+      <h1>Forest Walk</h1>
+      <p class="tagline">an endless sensation journey</p>
+      <p class="desc">
+        There is no finish line here. Walk through a forest that never ends —
+        watch the light shift from dawn to dusk to night, feel the weather turn,
+        and notice small sensations along the way.
+      </p>
+      <ul class="howto">
+        <li><b>Hold Space, or click / tap &amp; hold</b> — walk</li>
+        <li><b>↑ / W</b> quicken your pace &nbsp;·&nbsp; <b>↓ / S</b> slow it</li>
+        <li><b>P</b> — pause &nbsp;·&nbsp; <b>J</b> — journal &nbsp;·&nbsp; <b>M</b> — mute</li>
+      </ul>
+      <button id="btnStart">Begin Walking</button>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>

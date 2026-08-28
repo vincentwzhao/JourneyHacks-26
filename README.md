@@ -26,6 +26,9 @@ Features:
 	Location tracking (GPS)
 	Chatbot
 
+Prototype:
+`/forest-walk` — an endless "Forest Walk" sensation-journey mini game (open `forest-walk/index.html` in a browser, no build step). Walk through a procedurally generated forest with a day/night cycle, shifting weather, ambient synthesized sound, and periodic sensory prompts collected in a journal.
+
 Judging Criteria:
 Best Use of Gemini API
 Best Pitch using Alpha Foundry
