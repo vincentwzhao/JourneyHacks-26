@@ -59,6 +59,7 @@ ${text.trim().slice(0, 4000)}
 
     if (!geminiRes.ok) {
       const detail = await geminiRes.text();
+      console.error(`Gemini API error (${geminiRes.status}) [model=${model}]:`, detail);
       return NextResponse.json(
         { error: `Gemini API error (${geminiRes.status})`, detail },
         { status: 502 }
